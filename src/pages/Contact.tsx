@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
-
+import emailjs from "emailjs-com";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -30,22 +30,53 @@ const Contact = () => {
     }));
   };
   
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      toast.success("Message sent successfully! I'll get back to you soon.");
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
-      });
-      setIsSubmitting(false);
-    }, 1500);
-  };
+  //   // Simulate form submission
+  //   setTimeout(() => {
+  //     toast.success("Message sent successfully! I'll get back to you soon.");
+  //     setFormData({
+  //       name: "",
+  //       email: "",
+  //       subject: "",
+  //       message: "",
+  //     });
+  //     setIsSubmitting(false);
+  //   }, 1500);
+  // };
+ 
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  try {
+    await emailjs.send(
+      "service_vflmbb6",   // Replace with your actual EmailJS Service ID
+      "template_j1vhhvn",  // Replace with your actual EmailJS Template ID
+      {
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      },
+      "_HmEjuHt1-RpCXvx_"    // Replace with your actual EmailJS Public Key
+    );
+
+    toast.success("Message sent successfully! I'll get back to you soon.");
+    setFormData({ name: "", email: "", subject: "", message: "" });
+  } catch (error) {
+    console.error("Email sending error:", error);
+    toast.error("Failed to send message. Please try again.");
+  }
+  
+  setIsSubmitting(false);
+};
+
+
+
   
   return (
     <div>
