@@ -246,7 +246,6 @@ const SettingsPage = () => {
                 <Button variant="outline" onClick={handleRestore} className="mt-2">
                   <Upload className="mr-2 h-4 w-4" /> Restore Backup
                 </Button>
-                <a href="https://drive.google.com/drive/folders/1V_mTVpV1vtTAlk0aW093tYBKdhlhh2FQ?usp=drive_link">click me drvie<a/>
               </div>
             </CardContent>
           </Card>
